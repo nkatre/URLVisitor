@@ -62,4 +62,4 @@ Output
 Time Complexity
 -------------
 
-The worst case time complexity of the program is **O(n)** where n = number of input lines in the input file
+The worst case time complexity of the program is **O(n)** where n = number of input lines in the input file.
