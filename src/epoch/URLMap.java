@@ -67,26 +67,26 @@ public class URLMap {
 			}
 		}
 	}
-
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
 		try{
 			System.out.println("Enter a input file name");
+			/*
+			 * Enter the full path of the file
+			 * Example: /home/nkatre/workspace/URLVisitor/src/epoch/input.txt
+			 */
 			String filename = in.nextLine();
-			File f = new File("./"+filename);
+			File f = new File(filename);
 			if(f.exists()){
-				
 				String[] inputLines= null;
 			    List<String> strList = new ArrayList<String>();
-
 			    try 
 			    { 
-			        FileInputStream fstream_school = new FileInputStream("text1.txt"); 
-			        DataInputStream data_input = new DataInputStream(fstream_school); 
+			        FileInputStream fstream = new FileInputStream(filename); 
+			        DataInputStream data_input = new DataInputStream(fstream); 
 			        @SuppressWarnings("resource")
 					BufferedReader buffer = new BufferedReader(new InputStreamReader(data_input)); 
 			        String str_line; 
-
 			        while ((str_line = buffer.readLine()) != null) 
 			        { 
 			            str_line = str_line.trim(); 
@@ -101,11 +101,10 @@ public class URLMap {
 			    {
 			        System.err.println("Error: " + e.getMessage());
 			    }
-			    // Calls the working method
 				createMap(inputLines);
 			}
 			else{
-			    System.out.println("Input file not found");
+			    System.out.println("Input file not present in current directory");
 			}
 		}
 		finally{
@@ -113,3 +112,7 @@ public class URLMap {
 		}
 	}
 }
+/*
+Time Complexity = O(n)
+where n = number of input lines in the input file
+*/
