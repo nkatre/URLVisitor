@@ -1,4 +1,3 @@
-
 AppDynamics Evaluation
 ===================
 Submitted by:
@@ -59,3 +58,8 @@ Output
     08/10/2014 GMT
     www.twitter.com 1
 
+
+Time Complexity
+-------------
+
+The worst case time complexity of the program is O(n) where n is the number of unique URLs
