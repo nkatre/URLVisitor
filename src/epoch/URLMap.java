@@ -1,14 +1,22 @@
 package epoch;
 
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Scanner;
 import java.util.TimeZone;
 import java.util.TreeMap;
 
@@ -22,9 +30,8 @@ public class URLMap {
 		return dtStr;
 	}
 	
-	private static void createMap(String input){
+	private static void createMap(String[] inputLines){
 		Map<Long, Map<String,Integer>> dateToURLMap = new TreeMap<Long, Map<String,Integer>>();
-		String[] inputLines = input.split(",");
 		
 		for (String line : inputLines) {
 			String[] tokens = line.split("\\|");
@@ -49,13 +56,11 @@ public class URLMap {
 			@SuppressWarnings("unchecked")
 			Entry<String,Integer>[] countEntries = urlToCntMap.entrySet().toArray(new Entry[urlToCntMap.size()]);
 			Arrays.sort(countEntries, new Comparator<Entry<String,Integer>>(){
-
 				@Override
 				public int compare(Entry<String, Integer> o1,
 						Entry<String, Integer> o2) {
 					return o2.getValue().compareTo(o1.getValue());
 				}
-				
 			});
 			for(Entry<String,Integer> en : countEntries){
 				System.out.println(en.getKey()+" "+en.getValue());
@@ -64,10 +69,47 @@ public class URLMap {
 	}
 
 	public static void main(String[] args) {
+		Scanner in = new Scanner(System.in);
+		try{
+			System.out.println("Enter a input file name");
+			String filename = in.nextLine();
+			File f = new File("./"+filename);
+			if(f.exists()){
+				
+				String[] inputLines= null;
+			    List<String> strList = new ArrayList<String>();
 
-		String input = "1407564301|www.nba.com,1407478021|facebook,1407478022|facebook,1407481200|news.ycombinator,1407478028|google,1407564301|sports.yahoo,1407564300|cnn,1407564300|nba,1407564300|nba,1407564301|sports.yahoo,1407478022|google,1407648022|twitter";
-		createMap(input);
+			    try 
+			    { 
+			        FileInputStream fstream_school = new FileInputStream("text1.txt"); 
+			        DataInputStream data_input = new DataInputStream(fstream_school); 
+			        @SuppressWarnings("resource")
+					BufferedReader buffer = new BufferedReader(new InputStreamReader(data_input)); 
+			        String str_line; 
 
+			        while ((str_line = buffer.readLine()) != null) 
+			        { 
+			            str_line = str_line.trim(); 
+			            if ((str_line.length()!=0))  
+			            { 
+			            	strList.add(str_line);
+			            } 
+			        }
+			        inputLines = (String[])strList.toArray(new String[strList.size()]);
+			    }
+			    catch (Exception e)  
+			    {
+			        System.err.println("Error: " + e.getMessage());
+			    }
+			    // Calls the working method
+				createMap(inputLines);
+			}
+			else{
+			    System.out.println("Input file not found");
+			}
+		}
+		finally{
+			in.close();
+		}
 	}
-
 }
